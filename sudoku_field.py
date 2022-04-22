@@ -2,7 +2,7 @@ import pygame
 
 
 class Field:
-    def __init__(self, screen, x, y, content):
+    def __init__(self, screen, x, y, content, game):
         self.screen = screen
         self.x = x
         self.y = y
@@ -12,6 +12,7 @@ class Field:
         self.content = content if content != '0' else ''
         self.isFixed = content != '0'
         self.isSelected = False
+        self.game = game
 
     def display(self):
         background_color = (245, 245, 245) if self.isFixed else (
@@ -48,5 +49,9 @@ class Field:
         self.display()
 
     def updateNumber(self, number):
+        if self.content == "" and number != "":
+            self.game.empty_fields -= 1
+        elif self.content != "" and number == "":
+            self.game.empty_fields += 1
         self.content = number
         self.display()
