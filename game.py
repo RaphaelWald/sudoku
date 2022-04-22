@@ -1,15 +1,13 @@
 import pygame
 from sudoku_field import Field
-from loadGrids import getRandomPuzzle
-import time
-from menu import Time_Display, Button
+from menu import Time_Display, Button, Menu
 
 
 class Game:
-    def __init__(self, screen):
+    def __init__(self, screen, puzzle):
         self.screen = screen
         self.empty_fields = 81
-        self.current_puzzle = getRandomPuzzle()
+        self.current_puzzle = puzzle
         self.rows = self.initRows()
         self.columns = self.initColumns()
         self.blocks = self.initBlocks()
@@ -17,10 +15,13 @@ class Game:
         self.selected_row = -1
         self.selected_column = -1
         self.time_display = Time_Display(screen)
-        self.menu_button = Button(
-            screen, 0, 900, 300, 100, "OPTIONS", (0, 150, 0))
+        self.options = False
+        self.options_button = Button(
+            screen, 0, 900, 300, 100, "OPTIONS", (0, 150, 0), (0, 200, 0))
         self.solve_button = Button(
-            screen, 600, 900, 300, 100, "SOLVE!", (255, 0, 0))
+            screen, 600, 900, 300, 100, "SOLVE!", (200, 0, 0), (255, 0, 0))
+        self.buttons = [self.options_button, self.solve_button]
+        self.menu = Menu(screen)
 
     def initRows(self):
         rows = []
@@ -39,7 +40,6 @@ class Game:
 
     def initColumns(self):
         columns = [[] for i in range(9)]
-        print(columns)
         for i in range(9):
             for j in range(9):
                 columns[j].append(self.rows[i][j])
@@ -61,11 +61,13 @@ class Game:
         return blocks
 
     def display(self):
-        self.menu_button.display()
+        self.options_button.display()
         self.solve_button.display()
         for row in self.rows:
             for field in row:
                 field.display()
+        if self.options:
+            self.menu.display()
 
     def boardIsFilledOut(self):
         return self.empty_fields == 0
@@ -78,9 +80,6 @@ class Game:
                 row.add(self.rows[i][j].content)
                 column.add(self.columns[i][j].content)
                 block.add(self.blocks[i][j].content)
-            print(row)
-            print(column)
-            print(block)
             if len(row) != 9 or len(column) != 9 or len(block) != 9:
                 return False
 

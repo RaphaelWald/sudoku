@@ -1,4 +1,5 @@
 import pygame
+from outer_grid import displayOuterGrid
 
 
 class Field:
@@ -39,6 +40,8 @@ class Field:
             textRect.center = (self.x + self.size/2,
                                self.y + self.size/2)
             self.screen.blit(text, textRect)
+
+        displayOuterGrid(self.screen)
 
     def select(self):
         self.isSelected = True
