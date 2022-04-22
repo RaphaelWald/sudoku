@@ -1,6 +1,8 @@
 import pygame
 from sudoku_field import Field
 from loadGrids import getRandomPuzzle
+import time
+from menu import Time_Display, Button
 
 
 class Game:
@@ -14,6 +16,11 @@ class Game:
         self.fieldSelected = False
         self.selected_row = -1
         self.selected_column = -1
+        self.time_display = Time_Display(screen)
+        self.menu_button = Button(
+            screen, 0, 900, 300, 100, "OPTIONS", (0, 150, 0))
+        self.solve_button = Button(
+            screen, 600, 900, 300, 100, "SOLVE!", (255, 0, 0))
 
     def initRows(self):
         rows = []
@@ -53,7 +60,9 @@ class Game:
 
         return blocks
 
-    def displayGame(self):
+    def display(self):
+        self.menu_button.display()
+        self.solve_button.display()
         for row in self.rows:
             for field in row:
                 field.display()
@@ -76,3 +85,6 @@ class Game:
                 return False
 
         return True
+
+    def displayTime(self):
+        pygame.draw.r

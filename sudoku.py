@@ -13,13 +13,14 @@ screen = pygame.display.set_mode([900, 1000])
 screen.fill((255, 255, 255))
 
 game = Game(screen)
+game.display()
 
 
 displayOuterGrid(screen)
 # Run until the user asks to quit
 running = True
 while running:
-    print(game.empty_fields)
+    game.time_display.display_current_time()
     if game.boardIsFilledOut():
         if game.isCorrect():
             print("Puzzle was solved successfully!")
