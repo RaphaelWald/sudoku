@@ -1,6 +1,8 @@
+from os import getrandom
 import pygame
 from sudoku_field import Field
 from outer_grid import displayOuterGrid
+from loadGrids import getRandomPuzzle
 
 # Import and initialize the pygame library
 pygame.init()
@@ -12,11 +14,12 @@ screen.fill((255, 255, 255))
 selected_row, selected_column = -1, -1
 fieldSelected = False
 
+puzzle = getRandomPuzzle()
 fields = []
 for i in range(9):
     row = []
     for j in range(9):
-        field = Field(screen, 100*i, 100*j)
+        field = Field(screen, 100*i, 100*j, puzzle[i][j])
         field.display()
         row.append(field)
     fields.append(row)
@@ -42,7 +45,7 @@ while running:
                 fields[selected_row][selected_column].select()
 
         if event.type == pygame.KEYDOWN:
-            if fieldSelected:
+            if fieldSelected and not fields[selected_row][selected_column].isFixed:
                 if event.key == pygame.K_1:
                     fields[selected_row][selected_column].updateNumber("1")
                 elif event.key == pygame.K_2:

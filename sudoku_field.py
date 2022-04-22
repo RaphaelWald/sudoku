@@ -2,19 +2,20 @@ import pygame
 
 
 class Field:
-    def __init__(self, screen, x, y):
+    def __init__(self, screen, x, y, content):
         self.screen = screen
         self.x = x
         self.y = y
         self.font = pygame.font.SysFont('ligconsolata', 80)
         self.size = 100
-        self.border_size = self.size * 0.02
-        self.content = ""
+        self.border_size = self.size * 0.01
+        self.content = content if content != '0' else ''
+        self.isFixed = content != '0'
         self.isSelected = False
 
     def display(self):
-        background_color = (
-            235, 235, 235) if self.isSelected else (255, 255, 255)
+        background_color = (245, 245, 245) if self.isFixed else (
+            (0, 255, 255) if self.isSelected else (255, 255, 255))
         if self.isSelected:
             pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect(
                 self.x, self.y, self.size, self.size))
