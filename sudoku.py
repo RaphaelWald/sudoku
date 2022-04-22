@@ -2,6 +2,7 @@ from os import getrandom
 from loadGrids import getRandomPuzzle
 import pygame
 from game import Game
+from sudoku_solver import get_solved_board
 
 
 # Import and initialize the pygame library
@@ -20,11 +21,12 @@ running = True
 while running:
     game.time_display.display_current_time()
     if game.boardIsFilledOut():
+        game.options = True
         if game.isCorrect():
-            print("Puzzle was solved successfully!")
+            game.isWon = True
         else:
-            print("WRONG")
-            pygame.quit()
+            game.isLost = True
+        game.display()
     # Did the user click the window close button?
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -72,7 +74,8 @@ while running:
                 game.display()
             elif game.solve_button.isPosition(x, y):
                 # Solve the puzzle
-                pass
+                solved_board = get_solved_board(game.current_puzzle)
+                game.display_solved_board(solved_board)
 
         if event.type == pygame.KEYDOWN:
             if game.fieldSelected and not game.rows[game.selected_row][game.selected_column].isFixed and not game.options:

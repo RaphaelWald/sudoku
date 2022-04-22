@@ -22,6 +22,8 @@ class Game:
             screen, 600, 900, 300, 100, "SOLVE!", (200, 0, 0), (255, 0, 0))
         self.buttons = [self.options_button, self.solve_button]
         self.menu = Menu(screen)
+        self.isWon = False
+        self.isLost = False
 
     def initRows(self):
         rows = []
@@ -69,6 +71,12 @@ class Game:
         if self.options:
             self.menu.display()
 
+        if self.isWon:
+            self.isWon = False
+
+        elif self.isLost:
+            self.isLost = False
+
     def boardIsFilledOut(self):
         return self.empty_fields == 0
 
@@ -87,3 +95,10 @@ class Game:
 
     def displayTime(self):
         pygame.draw.r
+
+    def display_solved_board(self, solved_board):
+        for row_idx, row in enumerate(self.rows):
+            for column_idx, field in enumerate(row):
+                if not field.isFixed:
+                    field.content = solved_board[row_idx][column_idx]
+                    field.display()
