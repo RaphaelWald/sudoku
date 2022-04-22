@@ -21,7 +21,7 @@ running = True
 while running:
     print(game.empty_fields)
     if game.boardIsFilledOut():
-        if game.isCorrect:
+        if game.isCorrect():
             print("Puzzle was solved successfully!")
         else:
             print("WRONG")

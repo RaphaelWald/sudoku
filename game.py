@@ -53,6 +53,11 @@ class Game:
 
         return blocks
 
+    def displayGame(self):
+        for row in self.rows:
+            for field in row:
+                field.display()
+
     def boardIsFilledOut(self):
         return self.empty_fields == 0
 
