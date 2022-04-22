@@ -1,13 +1,23 @@
+from cgi import test
+import pygame
+from sudoku_field import Field
 # Simple pygame program
 
 # Import and initialize the pygame library
-import pygame
 pygame.init()
 
 # Set up the drawing window
-screen = pygame.display.set_mode([1000, 1000])
+screen = pygame.display.set_mode([900, 1000])
+screen.fill((255, 255, 255))
 
-# Run until the user asks to quit
+fields = []
+for i in range(9):
+    for j in range(9):
+        field = Field(screen, 100*i, 100*j)
+        field.display()
+        fields.append(field)
+
+        # Run until the user asks to quit
 running = True
 while running:
 
@@ -15,12 +25,6 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-
-    # Fill the background with white
-    screen.fill((255, 255, 255))
-
-    # Draw a solid blue circle in the center
-    pygame.draw.circle(screen, (0, 0, 255), (250, 250), 75)
 
     # Flip the display
     pygame.display.flip()
