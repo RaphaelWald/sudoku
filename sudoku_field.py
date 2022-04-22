@@ -13,24 +13,26 @@ class Field:
         self.isSelected = False
 
     def display(self):
+        background_color = (
+            235, 235, 235) if self.isSelected else (255, 255, 255)
         if self.isSelected:
-            pygame.draw.rect(self.screen, (20, 20, 20), pygame.Rect(
+            pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect(
                 self.x, self.y, self.size, self.size))
-            pygame.draw.rect(self.screen, (235, 235, 235), pygame.Rect(
+            pygame.draw.rect(self.screen, background_color, pygame.Rect(
                 self.x + 2*self.border_size, self.y + 2*self.border_size, self.size -
                 4*self.border_size, self.size - 4*self.border_size)
             )
         else:
             pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect(
                 self.x, self.y, self.size, self.size))
-            pygame.draw.rect(self.screen, (255, 255, 255), pygame.Rect(
+            pygame.draw.rect(self.screen, background_color, pygame.Rect(
                 self.x + self.border_size, self.y + self.border_size, self.size -
                 2*self.border_size, self.size - 2*self.border_size)
             )
 
         if self.content != "":
             text = self.font.render(
-                self.content, True, (0, 0, 0), (255, 255, 255))
+                self.content, True, (0, 0, 0), background_color)
             textRect = text.get_rect()
             textRect.center = (self.x + self.size/2,
                                self.y + self.size/2)

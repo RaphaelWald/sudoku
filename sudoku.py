@@ -10,6 +10,7 @@ screen = pygame.display.set_mode([900, 1000])
 screen.fill((255, 255, 255))
 
 selected_row, selected_column = -1, -1
+fieldSelected = False
 
 fields = []
 for i in range(9):
@@ -19,6 +20,7 @@ for i in range(9):
         field.display()
         row.append(field)
     fields.append(row)
+
 
 displayOuterGrid(screen)
 # Run until the user asks to quit
@@ -33,13 +35,34 @@ while running:
         if event.type == pygame.MOUSEBUTTONUP:
             x, y = pygame.mouse.get_pos()
             if (y < 900):
+                fieldSelected = True
                 if selected_row >= 0 and selected_column >= 0:
                     fields[selected_row][selected_column].unselect()
-                row, column = int(x / 100), int(y / 100)
-                fields[row][column].select()
-                selected_row, selected_column = row, column
+                selected_row, selected_column = int(x / 100), int(y / 100)
+                fields[selected_row][selected_column].select()
 
-    # Flip the display
+        if event.type == pygame.KEYDOWN:
+            if fieldSelected:
+                if event.key == pygame.K_1:
+                    fields[selected_row][selected_column].updateNumber("1")
+                elif event.key == pygame.K_2:
+                    fields[selected_row][selected_column].updateNumber("2")
+                elif event.key == pygame.K_3:
+                    fields[selected_row][selected_column].updateNumber("3")
+                elif event.key == pygame.K_4:
+                    fields[selected_row][selected_column].updateNumber("4")
+                elif event.key == pygame.K_5:
+                    fields[selected_row][selected_column].updateNumber("5")
+                elif event.key == pygame.K_6:
+                    fields[selected_row][selected_column].updateNumber("6")
+                elif event.key == pygame.K_7:
+                    fields[selected_row][selected_column].updateNumber("7")
+                elif event.key == pygame.K_8:
+                    fields[selected_row][selected_column].updateNumber("8")
+                elif event.key == pygame.K_9:
+                    fields[selected_row][selected_column].updateNumber("9")
+
+                # Flip the display
     displayOuterGrid(screen)
     pygame.display.flip()
 
