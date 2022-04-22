@@ -57,22 +57,17 @@ class Game:
         return self.empty_fields == 0
 
     def isCorrect(self):
-        rows = [int(field.content) for row in self.rows for field in row]
-        columns = [int(field.content)
-                   for column in self.columns for field in column]
-        blocks = [int(field.content)
-                  for block in self.blocks for field in block]
 
-        for row in rows:
-            if len(set(row)) != 9:
-                return False
-
-        for column in columns:
-            if len(set(column)) != 9:
-                return False
-
-        for block in blocks:
-            if len(set(block)) != 9:
+        for i in range(9):
+            row, column, block = set(), set(), set()
+            for j in range(9):
+                row.add(self.rows[i][j].content)
+                column.add(self.columns[i][j].content)
+                block.add(self.blocks[i][j].content)
+            print(row)
+            print(column)
+            print(block)
+            if len(row) != 9 or len(column) != 9 or len(block) != 9:
                 return False
 
         return True
